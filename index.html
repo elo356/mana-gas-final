@@ -51,10 +51,18 @@
   </style>
   <style>
     /* Hero wave tweaks */
-    .hero-wave { display:block; width:100%; height:100%; }
+    .hero-wave { display:block; width:100%; height:100%; transform:translateY(0); transition:transform .22s ease; }
     /* ensure the SVG sits above background but below content */
     .hero-wave { position:relative; z-index:5; }
     section#inicio { position:relative; z-index:20; }
+
+  /* Container hook for responsive adjustments */
+
+    /* Lower the wave slightly on small screens to avoid overlap with content */
+    @media (max-width: 768px) {
+      .hero-wave { transform: translateY(18px); }
+      .hero-wave-wrap { bottom: -12px; }
+    }
   </style>
     <style>
     :root {
@@ -138,7 +146,7 @@
         </div>
       </div>
     </div>
-    <div class="absolute left-0 right-0 bottom-0 h-36 md:h-40 overflow-hidden pointer-events-none">
+  <div class="absolute left-0 right-0 bottom-0 h-36 md:h-40 overflow-hidden pointer-events-none hero-wave-wrap">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none" class="w-[calc(100%+1px)] h-full hero-wave">
         <defs>
           <filter id="waveShadow" x="-20%" y="-50%" width="140%" height="200%">
