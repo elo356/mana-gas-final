@@ -108,29 +108,43 @@
   </style>
 </head>
 <body class="bg-white text-zinc-900 antialiased">
+
+  
   <!-- Header -->
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-y border-zinc-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
   <div class="mx-auto w-[92%] max-w-[1200px] flex items-center justify-between py-3">
     
     <!-- Logo -->
     <a href="#inicio" class="flex items-center gap-3 flex-shrink-0">
-      <img src="images/logo.jpg" alt="Maná Gas" class="h-10 w-auto" />
-  
+      <img src="images/logo.jpg" alt="Maná Gas" class="h-9 w-auto" />
     </a>
 
-    <!-- Menú en una sola línea, scroll suave en mobile -->
-    <nav class="flex flex-nowrap overflow-x-auto no-scrollbar items-center gap-4 sm:gap-6 text-sm sm:text-base font-medium text-zinc-700 ml-4">
-      <a href="#servicios" class="hover:text-brand-700 transition-colors flex-shrink-0">Servicios</a>
-
-      <a href="#seguridad" class="hover:text-brand-700 transition-colors flex-shrink-0">Seguridad</a>
-      <a href="#cotizaciones" class="hover:text-brand-700 transition-colors flex-shrink-0">Cotización</a>
-      <a href="#contacto" class="bg-brand-600 text-white px-4 py-1.5 hover:bg-brand-700 transition-colors font-semibold flex items-center gap-1 flex-shrink-0">
+    <!-- Menú adaptativo -->
+    <nav class="flex items-center justify-end gap-2 sm:gap-4 md:gap-6 font-medium text-zinc-700 text-[13px] sm:text-sm md:text-base flex-shrink">
+      <a href="#servicios" class="hover:text-brand-700 transition-colors">Servicios</a>
+      <a href="#quienes" class="hover:text-brand-700 transition-colors hidden sm:inline">Nosotros</a>
+      <a href="#seguridad" class="hover:text-brand-700 transition-colors">Seguridad</a>
+      <a href="#cotizaciones" class="hover:text-brand-700 transition-colors ">Cotización</a>
+        <a href="#contacto" class="bg-brand-600 text-white px-4 py-1.5 hover:bg-brand-700 transition-colors font-semibold flex items-center gap-1 flex-shrink-0">
         <i class="fa-solid fa-phone"></i> Contacto
       </a>
     </nav>
 
   </div>
 </header>
+
+
+<!-- Ocultar scrollbars pero mantener desplazamiento -->
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+</style>
 
 <!-- Ocultar scrollbars en todos los navegadores -->
 <style>
