@@ -85,6 +85,8 @@
     nav ul{display:flex;gap:1.2rem;list-style:none}
     .menu-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;background:#fff;border:1px solid #eee;cursor:pointer}
 
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 
 
@@ -107,22 +109,27 @@
 </head>
 <body class="bg-white text-zinc-900 antialiased">
   <!-- Header -->
-  <header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-zinc-200">
-    <div class="mx-auto w-[92%] max-w-[1150px] flex items-center justify-between py-3">
-      <a href="#inicio" class="flex items-center gap-2">
-        <img src="images/logo.jpg" alt="Maná Gas" class="h-10 w-auto"/>
-        <span class="font-bold tracking-wide">Maná Gas</span>
+<header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-zinc-200">
+  <div class="mx-auto w-[92%] max-w-[1150px] flex items-center justify-between py-3">
+    <!-- Logo -->
+    <a href="#inicio" class="flex items-center gap-2 flex-shrink-0">
+      <img src="images/logo.jpg" alt="Maná Gas" class="h-9 w-auto" />
+      <span class="font-bold tracking-wide text-sm sm:text-base">Maná Gas</span>
+    </a>
+
+    <!-- Menú horizontal adaptable -->
+    <nav class="flex overflow-x-auto no-scrollbar whitespace-nowrap gap-1 sm:gap-2 flex-1 justify-end ml-3">
+      <a href="#servicios" class="px-3 py-1.5 rounded-card font-semibold border border-zinc-200 hover:border-brand-600 hover:text-brand-700 transition text-xs sm:text-sm md:text-base flex-shrink-0">Servicios</a>
+      <a href="#quienes" class="px-3 py-1.5 rounded-card font-semibold border border-zinc-200 hover:border-brand-600 hover:text-brand-700 transition text-xs sm:text-sm md:text-base flex-shrink-0">Nosotros</a>
+      <a href="#seguridad" class="px-3 py-1.5 rounded-card font-semibold border border-zinc-200 hover:border-brand-600 hover:text-brand-700 transition text-xs sm:text-sm md:text-base flex-shrink-0">Seguridad</a>
+      <a href="#cotizaciones" class="px-3 py-1.5 rounded-card font-semibold border border-zinc-200 hover:border-brand-600 hover:text-brand-700 transition text-xs sm:text-sm md:text-base flex-shrink-0">Cotización</a>
+      <a href="#contacto" class="px-3 py-1.5 rounded-card font-semibold bg-brand-600 text-white shadow-soft hover:bg-brand-700 transition text-xs sm:text-sm md:text-base flex-shrink-0">
+        <i class="fa-solid fa-phone"></i> Contacto
       </a>
-      <nav class="hidden md:flex items-center gap-2">
-        <a href="#servicios" class="px-4 py-2 rounded-card font-semibold border border-zinc-200 hover:border-brand-600 hover:text-brand-700 transition">Servicios</a>
-        <a href="#quienes"   class="px-4 py-2 rounded-card font-semibold border border-zinc-200 hover:border-brand-600 hover:text-brand-700 transition">Nosotros</a>
-        <a href="#seguridad" class="px-4 py-2 rounded-card font-semibold border border-zinc-200 hover:border-brand-600 hover:text-brand-700 transition">Seguridad</a>
-        <a href="#cotizaciones"   class="px-4 py-2 rounded-card font-semibold border border-zinc-200 hover:border-brand-600 hover:text-brand-700 transition">Cotización</a>
-        <a href="#contacto" class="px-4 py-2 rounded-card font-semibold bg-brand-600 text-white shadow-soft hover:bg-brand-700 transition"><i class="fa-solid fa-phone"></i> Contacto</a>
-      </nav>
-      <a href="tel:+17874691651" class="md:hidden inline-flex items-center gap-2 rounded-card bg-brand-600 px-3 py-2 text-white font-semibold shadow-soft hover:bg-brand-700">Llamar</a>
-    </div>
-  </header>
+    </nav>
+  </div>
+</header>
+
 
   <!-- Hero -->
   <section id="inicio" class="relative min-h-[72vh] text-white overflow-hidden">
@@ -136,9 +143,10 @@
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
           Tu proveedor confiable de <span class="text-[#ff7c7c]">gas propano</span> en Puerto Rico.
         </h1>
-        <p class="text-white/90 max-w-prose">
-        Ofrecemos el servicio y la respuesta que buscas. Ya sea que compraste tu primer electrodoméstico de gas, o tu primera casa, te ayudamos con orientación, herramientas y servicios técnicos.
-        </p>
+  <p class="bg-white/70 text-zinc-800 py-3 px-6 w-screen relative left-1/2 right-1/2 -translate-x-1/2">
+  Ofrecemos el servicio y la respuesta que buscas. Ya sea que compraste tu primer electrodoméstico de gas,
+  o tu primera casa, te ayudamos con orientación, herramientas y servicios técnicos.
+</p>
         <div class="flex flex-wrap gap-3">
           <a class="inline-flex items-center gap-2 px-4 py-2 rounded-card font-semibold bg-brand-600 text-white shadow-soft hover:bg-brand-700 transition" href="tel:+17874691651"><i class="fa-solid fa-phone"></i> Llamar 24/7</a>
           <a class="inline-flex items-center gap-2 px-4 py-2 rounded-card font-semibold border border-white/20 bg-white/10 text-white hover:bg-white/15 transition" href="https://wa.me/17874691651" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
@@ -147,52 +155,84 @@
       </div>
     </div>
   <div class="absolute left-0 right-0 bottom-0 h-36 md:h-40 overflow-hidden pointer-events-none hero-wave-wrap">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none" class="w-[calc(100%+1px)] h-full hero-wave">
-        <defs>
-          <filter id="waveShadow" x="-20%" y="-50%" width="140%" height="200%">
-            <feDropShadow dx="0" dy="-6" stdDeviation="18" flood-color="#000" flood-opacity="0.12"/>
-          </filter>
-        </defs>
-        <!-- stronger wave curve + shadow + subtle stroke for separation -->
-        <path d="M0,160 C220,230 420,90 720,140 C980,180 1180,220 1440,170 L1440,320 L0,320 Z" fill="#ffffff" stroke="rgba(0,0,0,0.04)" stroke-width="1" filter="url(#waveShadow)"></path>
-      </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none" class="w-[calc(100%+1px)] h-full hero-wave">
+  <defs>
+    <!-- sombra suave y amplia -->
+    <filter id="waveShadow" x="-20%" y="-50%" width="140%" height="200%">
+      <feDropShadow dx="0" dy="-8" stdDeviation="20" flood-color="#000" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- Curva moderna blanca -->
+  <path 
+    d="M0,240 
+       C400,280 900,200 1440,240 
+       L1440,320 
+       L0,320 Z"
+    fill="#ffffff"
+    stroke="rgba(0,0,0,0.03)"
+    stroke-width="1"
+    filter="url(#waveShadow)">
+  </path>
+</svg>
+
     </div>
   </section>
 
   <!-- Servicios -->
-  <section id="servicios" class="py-16">
-    <div class="mx-auto w-[92%] max-w-[1100px]">
-      <h2 class="text-2xl md:text-3xl font-semibold text-center">Nuestros Servicios</h2>
-      <p class="text-zinc-600 mt-1 mb-8 text-center">Soluciones completas para tu sistema de gas propano</p>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
-          <i class="fa-solid fa-truck text-3xl text-brand-600 mb-3"></i>
-          <h3 class="font-semibold text-lg">Entregas Domiciliarias</h3>
-          <p class="text-zinc-600">Transporte de cilindros a residencias, negocios y almacenes.</p>
+<section id="servicios" class="py-16">
+  <div class="mx-auto w-[92%] max-w-[1100px]">
+    <h2 class="text-2xl md:text-3xl font-semibold text-center">Nuestros Servicios</h2>
+    <p class="text-zinc-600 mt-1 mb-8 text-center">Soluciones completas para tu sistema de gas propano</p>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
+        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300">
+          <i class="fa-solid fa-truck text-xl text-brand-600"></i>
         </div>
-        <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
-          <i class="fa-solid fa-gas-pump text-3xl text-brand-600 mb-3"></i>
-          <h3 class="font-semibold text-lg">Venta de Cilindros</h3>
-          <p class="text-zinc-600">Disponibles en 20, 40, 50 y 100 lb.</p>
-        </div>
-        <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
-          <i class="fa-solid fa-house-chimney text-3xl text-brand-600 mb-3"></i>
-          <h3 class="font-semibold text-lg">Instalaciones Residenciales</h3>
-          <p class="text-zinc-600">Instalación y mantenimiento profesional para tu hogar.</p>
-        </div>
-        <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
-          <i class="fa-solid fa-store text-3xl text-brand-600 mb-3"></i>
-          <h3 class="font-semibold text-lg">Artículos LPG</h3>
-          <p class="text-zinc-600">Válvulas, mangueras, reguladores y más.</p>
-        </div>
-        <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
-          <i class="fa-solid fa-screwdriver-wrench text-3xl text-brand-600 mb-3"></i>
-          <h3 class="font-semibold text-lg">Instalación de Electrodomésticos</h3>
-          <p class="text-zinc-600">Conexión segura de estufas, secadoras y calentadores.</p>
-        </div>
+        <h3 class="font-semibold text-lg">Entregas Domiciliarias</h3>
+        <p class="text-zinc-600">Transporte de cilindros a residencias, negocios y almacenes.</p>
       </div>
+
+      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
+        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300">
+          <i class="fa-solid fa-gas-pump text-xl text-brand-600"></i>
+        </div>
+        <h3 class="font-semibold text-lg">Venta de Cilindros</h3>
+        <p class="text-zinc-600">Disponibles en 20, 40, 50 y 100 lb.</p>
+      </div>
+
+      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
+        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300">
+          <i class="fa-solid fa-house-chimney text-xl text-brand-600"></i>
+        </div>
+        <h3 class="font-semibold text-lg">Instalaciones Residenciales</h3>
+        <p class="text-zinc-600">Instalación y mantenimiento profesional para tu hogar.</p>
+      </div>
+
+      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
+        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300">
+          <i class="fa-solid fa-store text-xl text-brand-600"></i>
+        </div>
+        <h3 class="font-semibold text-lg">Artículos LPG</h3>
+        <p class="text-zinc-600">Válvulas, mangueras, reguladores y más.</p>
+      </div>
+
+      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
+        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300">
+          <i class="fa-solid fa-screwdriver-wrench text-xl text-brand-600"></i>
+        </div>
+        <h3 class="font-semibold text-lg">Instalación de Electrodomésticos</h3>
+        <p class="text-zinc-600">Conexión segura de estufas, secadoras y calentadores.</p>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
+
+
+
 <!-- Quiénes somos -->
 <section id="quienes" class="relative bg-zinc-50 py-16 overflow-hidden">
   <!-- Imagen de fondo -->
@@ -215,6 +255,7 @@
       <p class="mt-2 text-zinc-700">El proceso de educación y preparación nos toca a todos y más cuando se trata de materiales peligrosos. En Maná Gas estamos comprometidos en brindar un servicio completo, enfocados en la seguridad y bien estar del cliente.</p>
     </article>
   </div>
+  
 </section>
 
 
@@ -369,7 +410,7 @@
           <li><a href="https://www.facebook.com/p/Man%C3%A1-Gas-100094310978743/" target="_blank" rel="noopener" aria-label="Página de Facebook"><i class="fa-brands fa-facebook"></i><span><strong>Facebook</strong> <small style="color:var(--muted);display:block">Visitar página</small></span></a></li>
           <li><a href="https://maps.app.goo.gl/AKQZZ7JsjZd7qsbDA" target="_blank" rel="noopener" aria-label="Ver en Google Maps"><i class="fa-solid fa-location-dot"></i><span><strong>Bo. Ceiba, Cidra</strong> <small style="color:var(--muted);display:block">Ver en Google Maps</small></span></a></li>
         </ul>
-        <p style="margin-top:1rem;color:var(--muted)">Lunes a Viernes 8am-5pm | Sábado 8am-4pm</p>
+        <p style="margin-top:1rem;color:var(--muted)">Lunes a Sabado de 8am-5pm</p>
       </div>
       <div class="contact-card">
         <h2>Encuéntranos</h2>
