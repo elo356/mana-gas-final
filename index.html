@@ -67,13 +67,49 @@
     <style>
     :root {
       --primary:#d92323;
+      --accent:#ff7c7c;
+      --gradient-1:linear-gradient(135deg,#ff9a9e 0%,#fecfef 50%,#fbc2eb 100%);
       --text:#1a1a1a;
       --muted:#6b7280;
       --bg:#ffffff;
       --bg-alt:#f7f7f7;
       --radius:18px;
       --shadow:0 10px 30px rgba(0,0,0,.08);
+      --glass: rgba(255,255,255,0.7);
     }
+    /* Animations & helpers */
+    @keyframes floatY { 0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)} }
+    @keyframes overlayShift { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
+    @keyframes pulseShadow { 0%{box-shadow:0 8px 20px rgba(217,35,35,.14)}50%{box-shadow:0 18px 40px rgba(217,35,35,.18)}100%{box-shadow:0 8px 20px rgba(217,35,35,.14)} }
+
+    /* Hero overlay animation */
+    .hero-overlay{ background: radial-gradient(ellipse at 10% 10%, rgba(255,124,124,0.12), transparent 20%), linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.15)); background-size:200% 200%; animation:overlayShift 10s linear infinite; }
+
+    /* Decorative blobs in hero */
+    .hero-blobs{ position:absolute; inset:0; pointer-events:none; z-index:8; overflow:visible }
+    .hero-blob{ position:absolute; filter:blur(24px) saturate(120%); opacity:.55; transform-origin:center; animation:floatY 6s ease-in-out infinite }
+    .hero-blob.b1{ left:-6%; top:6%; width:240px; height:240px; background:radial-gradient(circle at 30% 30%, rgba(255,124,124,.85), rgba(233,30,99,.25)); border-radius:50% }
+    .hero-blob.b2{ right:-8%; top:18%; width:300px; height:300px; background:radial-gradient(circle at 70% 40%, rgba(125,60,255,.78), rgba(15,23,42,0)); border-radius:50%; animation-duration:8s }
+    .hero-blob.b3{ left:10%; bottom:-6%; width:180px; height:180px; background:radial-gradient(circle at 20% 20%, rgba(37,211,102,.78), rgba(16,185,129,0)); border-radius:50%; animation-duration:7s }
+
+    /* Service card upgrades */
+    .service-card{ position:relative; overflow:hidden; transition:transform .36s cubic-bezier(.2,.9,.2,1), box-shadow .36s; border-radius:var(--radius); }
+    .service-card:before{ content:''; position:absolute; inset:-30%; background:linear-gradient(135deg, rgba(255,124,124,.06), rgba(125,60,255,.04)); transform:translateZ(0); transition:opacity .36s; opacity:0 }
+    .service-card:hover{ transform:translateY(-10px) scale(1.02); box-shadow:0 26px 60px rgba(15,23,42,.12) }
+    .service-card:hover:before{ opacity:1 }
+    .service-card .icon-wrap{ transition:transform .28s; }
+    .service-card:hover .icon-wrap{ transform:translateY(-6px) }
+
+    /* Floating fab buttons animation */
+    .fab-btn{ animation:floatY 3.6s ease-in-out infinite; }
+    .fab-btn:hover{ animation:none; transform:translateY(-6px) scale(1.06) }
+
+    /* Carousel dot active micro animation */
+    .dot{ transition:all .28s ease }
+    .dot.active{ transform:scale(1.25); box-shadow:0 6px 18px rgba(0,0,0,.12); background:var(--primary) }
+
+    /* Header subtle gradient underline on hover */
+    nav a:hover{ background:linear-gradient(90deg, rgba(217,35,35,0.06), rgba(255,124,124,0.03)); padding:6px 8px; border-radius:8px }
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:Poppins,system-ui;color:var(--text);background:var(--bg);scroll-behavior:smooth}
     a{color:inherit;text-decoration:none}
@@ -119,6 +155,37 @@
     @media (max-width: 768px){
       .hero-para{ position:relative !important; transform:none !important; left:auto !important; bottom:auto !important; width:auto !important; margin:4rem auto 0; max-width:92%; padding-left:1rem; padding-right:1rem; background:rgba(255,255,255,0.95); box-shadow:0 8px 22px rgba(0,0,0,.08); border-radius:12px; }
     }
+  </style>
+
+  <!-- ===== Estilo adicional sutil (opción 1) SIN tocar contenido ===== -->
+  <style>
+    /* Scroll reveal */
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(28px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; }
+    .reveal.in { animation: fadeInUp .7s cubic-bezier(.2,.9,.3,1) both; }
+
+    /* Entrada del H1 (sutil) */
+    #inicio h1 { opacity: 0; animation: titleSoft 900ms ease 120ms forwards; }
+    @keyframes titleSoft {
+      0% { opacity: 0; transform: translateY(22px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Micro-pulso apenas perceptible para CTAs clave */
+    a[href^="tel"], a[href*="wa.me"], .fab-btn {
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    a[href^="tel"]:hover, a[href*="wa.me"]:hover, .fab-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    }
+
+    /* Footer aparece suavemente al cargar */
+    footer { opacity: 0; animation: footerIn .8s ease 120ms forwards; }
+    @keyframes footerIn { from {opacity:0; transform: translateY(14px);} to {opacity:1; transform:none;} }
   </style>
 </head>
 <body class="bg-white text-zinc-900 antialiased">
@@ -168,7 +235,7 @@
 
 
   <!-- Hero -->
-<section id="inicio" class="relative min-h-[72vh] text-white overflow-hidden">
+<section id="inicio" class="relative min-h-[72vh] text-white overflow-hidden reveal">
   <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('images/pic13.jpg')"></div>
   <div class="absolute inset-0 hero-overlay"></div>
 
@@ -195,51 +262,43 @@
 
 
   <!-- Servicios -->
-<section id="servicios" class="py-16">
+<section id="servicios" class="py-16 reveal">
   <div class="mx-auto w-[92%] max-w-[1100px]">
     <h2 class="text-2xl md:text-3xl font-semibold text-center">Nuestros Servicios</h2>
     <p class="text-zinc-600 mt-1 mb-8 text-center">Soluciones completas para tu sistema de gas propano</p>
 
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
-        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300">
+      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition service-card reveal">
+        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300 icon-wrap">
           <i class="fa-solid fa-truck text-xl text-brand-600"></i>
         </div>
         <h3 class="font-semibold text-lg">Entregas Domiciliarias</h3>
         <p class="text-zinc-600">Transporte de cilindros a residencias, negocios y almacenes.</p>
       </div>
 
-      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
-        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300">
+      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition service-card reveal">
+        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300 icon-wrap">
           <i class="fa-solid fa-gas-pump text-xl text-brand-600"></i>
         </div>
         <h3 class="font-semibold text-lg">Venta de Cilindros</h3>
         <p class="text-zinc-600">Disponibles en 20, 40, 50 y 100 lb.</p>
       </div>
 
-      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
-        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300">
+      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition service-card reveal">
+        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300 icon-wrap">
           <i class="fa-solid fa-house-chimney text-xl text-brand-600"></i>
         </div>
         <h3 class="font-semibold text-lg">Instalaciones Residenciales</h3>
-        <p class="text-zinc-600">Instalación y mantenimiento profesional para tu hogar.</p>
+        <p class="text-zinc-600">Instalación y mantenimiento profesional para tu hogar. Conexión segura de estufas, secadoras y calentadores.</p>
       </div>
 
-      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
-        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300">
+      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition service-card reveal">
+        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300 icon-wrap">
           <i class="fa-solid fa-store text-xl text-brand-600"></i>
         </div>
         <h3 class="font-semibold text-lg">Artículos LPG</h3>
-        <p class="text-zinc-600">Válvulas, mangueras, reguladores y más.</p>
-      </div>
-
-      <div class="bg-white rounded-card shadow-soft p-6 text-center hover:-translate-y-1 transition">
-        <div class="inline-flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-gradient-to-r from-pink-200 to-rose-300">
-          <i class="fa-solid fa-screwdriver-wrench text-xl text-brand-600"></i>
-        </div>
-        <h3 class="font-semibold text-lg">Instalación de Electrodomésticos</h3>
-        <p class="text-zinc-600">Conexión segura de estufas, secadoras y calentadores.</p>
+        <p class="text-zinc-600">Válvulas, mangas, reguladores y más.</p>
       </div>
 
     </div>
@@ -249,7 +308,7 @@
 
 
 <!-- Quiénes somos -->
-<section id="quienes" class="relative bg-zinc-50 py-16 overflow-hidden">
+<section id="quienes" class="relative bg-zinc-50 py-16 overflow-hidden reveal">
   <!-- Imagen de fondo -->
   <div class="absolute inset-0">
     <img src="images/pic6.jpg" alt="Fondo Maná Gas"
@@ -258,13 +317,13 @@
 
   <!-- Contenido -->
   <div class="relative mx-auto w-[92%] max-w-[1100px] grid md:grid-cols-2 gap-6 items-stretch">
-    <article class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-soft">
+    <article class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-soft reveal">
       <p class="text-sm font-bold tracking-widest text-brand-600 uppercase">¿Quiénes somos?</p>
       <h2 class="mt-2 text-2xl font-semibold">Comprometidos con tu seguridad</h2>
-      <p class="mt-2 text-zinc-700">Somos una Empresa de gas propano. Nos dedicamos a transportar cilindros de punto A a punto B, con la preparación y medidas de precaución autorizadas. Hacemos entregas a residencias, comercios y almacenes.</p>
+      <p class="mt-2 text-zinc-700">Somos una Empresa de gas propano. Nos dedicamos a transportar cilindros de punto A a punto B, con la preparación y medidas de precaución autorizadas. Hacemos entregas a residencias y comercios.</p>
     </article>
 
-    <article class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-soft">
+    <article class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-soft reveal">
       <p class="text-sm font-bold tracking-widest text-brand-600 uppercase">Misión & Visión</p>
       <h2 class="mt-2 text-2xl font-semibold">Servicio completo, seguridad primero</h2>
       <p class="mt-2 text-zinc-700">El proceso de educación y preparación nos toca a todos y más cuando se trata de materiales peligrosos. En Maná Gas estamos comprometidos en brindar un servicio completo, enfocados en la seguridad y bien estar del cliente.</p>
@@ -275,7 +334,7 @@
 
 
   <!-- Seguridad -->
-   <section id="seguridad" class="py-16 md:py-20">
+   <section id="seguridad" class="py-16 md:py-20 reveal">
     <div class="mx-auto max-w-4xl px-4">
       <header class="mb-8 text-center" data-aos="fade-up">
         <p class="text-3xl font-bold tracking-widest text-brand-700 uppercase">Seguridad</p>
@@ -283,7 +342,7 @@
         <p class="mt-2 text-zinc-600">Sigue estos pasos y comunícate con nuestro equipo para asistencia profesional.</p>
       </header>
       <div class="space-y-4">
-        <details class="group rounded-xl border border-zinc-200 bg-white p-4 shadow-sm" data-aos="fade-up">
+        <details class="group rounded-xl border border-zinc-200 bg-white p-4 shadow-sm reveal" data-aos="fade-up">
           <summary class="flex cursor-pointer list-none items-center justify-between">
             <span class="font-semibold flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-brand-600"></i> Fugas de gas</span>
             <span class="transition group-open:rotate-180">⌄</span>
@@ -296,7 +355,7 @@
             </ol>
           </div>
         </details>
-        <details class="group rounded-xl border border-zinc-200 bg-white p-4 shadow-sm" data-aos="fade-up" data-aos-delay="50">
+        <details class="group rounded-xl border border-zinc-200 bg-white p-4 shadow-sm reveal" data-aos="fade-up" data-aos-delay="50">
           <summary class="flex cursor-pointer list-none items-center justify-between">
             <span class="font-semibold flex items-center gap-2"><i class="fa-solid fa-ban text-brand-600"></i> Cilindros defectuosos</span>
             <span class="transition group-open:rotate-180">⌄</span>
@@ -309,7 +368,7 @@
             </ol>
           </div>
         </details>
-        <details class="group rounded-xl border border-zinc-200 bg-white p-4 shadow-sm" data-aos="fade-up" data-aos-delay="100">
+        <details class="group rounded-xl border border-zinc-200 bg-white p-4 shadow-sm reveal" data-aos="fade-up" data-aos-delay="100">
           <summary class="flex cursor-pointer list-none items-center justify-between">
             <span class="font-semibold flex items-center gap-2"><i class="fa-solid fa-shield-halved text-brand-600"></i> Cambio de línea de manga</span>
             <span class="transition group-open:rotate-180">⌄</span>
@@ -324,12 +383,12 @@
 
   <!-- Cotizaciones -->
 <!-- Cotizaciones -->
-<section id="cotizaciones" class="py-16 md:py-20">
+<section id="cotizaciones" class="py-16 md:py-20 reveal">
   <div class="mx-auto max-w-5xl px-4">
     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm md:p-10 overflow-hidden relative" data-aos="fade-up">
       
       <!-- Carrusel -->
-      <div class="relative mb-6">
+      <div class="relative mb-6 reveal">
         <div id="cotiza-carousel" class="relative overflow-hidden rounded-2xl">
           <div class="flex transition-transform duration-700 ease-in-out" id="carousel-track">
             <!-- Imagen 1 -->
@@ -372,7 +431,7 @@
       </div>
 
       <!-- Texto -->
-      <div class="md:flex items-center justify-between gap-6">
+      <div class="md:flex items-center justify-between gap-6 reveal">
         <div>
           <p class="text-2xl font-bold tracking-widest text-brand-700 uppercase">Cotizaciones</p>
           <h3 class="mt-2 text-xl font-semibold">Visitas y depósitos</h3>
@@ -415,9 +474,9 @@
 
 
   <!-- Contacto -->
-  <section id="contacto">
+  <section id="contacto" class="reveal">
     <div class="container contact">
-      <div class="contact-card">
+      <div class="contact-card reveal">
         <h2>Contacto</h2>
         <ul class="contact-list">
           <li><a href="tel:+17874691651" aria-label="Llamar 787-469-1651"><i class="fa-solid fa-phone"></i><span><strong>787-469-1651</strong> <small style="color:var(--muted);display:block">Llamadas 24/7</small></span></a></li>
@@ -427,7 +486,7 @@
         </ul>
         <p style="margin-top:1rem;color:var(--muted)">Lunes a Sabado de 8am-5pm</p>
       </div>
-      <div class="contact-card">
+      <div class="contact-card reveal">
         <h2>Encuéntranos</h2>
      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3789.8687991414677!2d-66.16625748834018!3d18.2159519783349!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c0347337b5f7c13%3A0x263ce8a0d74149e8!2zTWFuw6EgR2Fz!5e0!3m2!1sen!2spr!4v1762276015571!5m2!1sen!2spr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
@@ -531,5 +590,39 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" defer></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+  <!-- ======= Animación sutil añadida (no intrusiva) ======= -->
+  <script>
+    // IntersectionObserver para revelar elementos suavemente
+    (function(){
+      const opts = { threshold: 0.14, rootMargin: "0px 0px -40px 0px" };
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, opts);
+      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    })();
+
+    // Parallax muy leve del fondo del hero (súper sutil)
+    (function(){
+      const bg = document.querySelector('#inicio .bg-cover');
+      if(!bg) return;
+      let ticking = false;
+      window.addEventListener('scroll', ()=>{
+        if(!ticking){
+          window.requestAnimationFrame(()=>{
+            const y = window.scrollY * 0.12; // sutil
+            bg.style.backgroundPosition = `center calc(50% + ${y}px)`;
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, {passive:true});
+    })();
+  </script>
 </body>
 </html>
